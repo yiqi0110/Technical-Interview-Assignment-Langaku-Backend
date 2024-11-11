@@ -15,7 +15,7 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 ###############################################################################
-## Implement the following views
+## TODO: Implement the following views
 
 
 class ItemViewSet(viewsets.ViewSet):

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 ###############################################################################
-## Modify the following models as you request.
+## TODO: Modify the following models as you request.
 
 
 class Item(models.Model):
