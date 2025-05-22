@@ -1,17 +1,32 @@
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authentication import (
     BasicAuthentication,
     SessionAuthentication,
 )
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.core.management import call_command
 
 
 # Disable CSRF check for this assigment
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     def enforce_csrf(self, request):
         return
+
+
+@api_view(["POST"])
+def initialize_data(request):
+    try:
+        file_name = request.data.get("file", "MOCK_DATA.json")
+        call_command("init_data", file=file_name)
+        return Response(
+            {"message": f"Data initialized successfully from {file_name}"},
+            status=status.HTTP_200_OK,
+        )
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 ###############################################################################

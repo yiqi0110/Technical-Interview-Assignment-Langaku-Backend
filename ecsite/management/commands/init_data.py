@@ -5,14 +5,20 @@ from ecsite.models import Item, User
 
 
 class Command(BaseCommand):
-    def handle(self, *args, **kwargs):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--file", default="MOCK_DATA.json", help="JSON file name to load data from"
+        )
+
+    def handle(self, *args, **options):
         Item.objects.all().delete()
         User.objects.all().delete()
 
         self.stdout.write(self.style.SUCCESS("All existing item data has been deleted"))
 
         try:
-            json_file_path = os.path.join(os.path.dirname(__file__), "MOCK_DATA.json")
+            file_name = options.get("file", "MOCK_DATA.json")
+            json_file_path = os.path.join(os.path.dirname(__file__), file_name)
 
             with open(json_file_path) as json_file:
                 data = json.load(json_file)
@@ -30,6 +36,8 @@ class Command(BaseCommand):
                 "testuser", email="testuser@example.com", password="testpassword"
             )
 
-            self.stdout.write(self.style.SUCCESS("Mock data loaded successfully"))
+            self.stdout.write(
+                self.style.SUCCESS(f"Mock data loaded successfully from {file_name}")
+            )
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Error loading data: {e}"))
