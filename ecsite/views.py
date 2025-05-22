@@ -20,6 +20,7 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 def initialize_data(request):
     try:
         file_name = request.data.get("file", "MOCK_DATA.json")
+        print(f"Initializing data from {file_name}")
         call_command("init_data", file=file_name)
         return Response(
             {"message": f"Data initialized successfully from {file_name}"},
@@ -35,7 +36,7 @@ def initialize_data(request):
 
 class ItemViewSet(viewsets.ViewSet):
     def list(self, request):
-        pass
+        return Response({"message": "List of items"}, status=status.HTTP_200_OK)
 
 
 class CartViewSet(viewsets.ViewSet):
@@ -43,7 +44,9 @@ class CartViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
-        pass
+        return Response(
+            {"message": "List of items in the cart"}, status=status.HTTP_200_OK
+        )
 
     @csrf_exempt
     @action(detail=False, methods=["post"])

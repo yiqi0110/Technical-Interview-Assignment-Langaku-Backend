@@ -35,6 +35,12 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 "testuser", email="testuser@example.com", password="testpassword"
             )
+            for i in range(1, 6):
+                User.objects.create_user(
+                    f"testuser{i}",
+                    email=f"testuser{i}@example.com",
+                    password="testpassword",
+                )
 
             self.stdout.write(
                 self.style.SUCCESS(f"Mock data loaded successfully from {file_name}")
