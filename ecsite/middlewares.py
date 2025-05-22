@@ -9,7 +9,8 @@ class MockLoginUserMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        print(request)
+        # print(request)
+        # If the url start from /api, set login user as testuser AI!
         user = User.objects.get(username="testuser")
         login(request, user)
         response = self.get_response(request)
