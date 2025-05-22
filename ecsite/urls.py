@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ItemViewSet, CartViewSet
+from .views import ItemViewSet, CartViewSet, initialize_data
 
 router = DefaultRouter()
 router.register(r"items", ItemViewSet, basename="item")
@@ -27,4 +27,6 @@ router.register(r"cart", CartViewSet, basename="cart")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include(router.urls)),
+    # DO NOT EDIT
+    path("initialize/", initialize_data, name="initialize_data"),
 ]
