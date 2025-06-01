@@ -18,11 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ItemViewSet, CartViewSet, initialize_data
+from .views import ItemViewSet, CartViewSet, AuditViewSet, initialize_data
 
 router = DefaultRouter()
 router.register(r"items", ItemViewSet, basename="item")
 router.register(r"cart", CartViewSet, basename="cart")
+router.register(r"audit", AuditViewSet, basename="audit")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

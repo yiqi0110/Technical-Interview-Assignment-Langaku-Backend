@@ -12,6 +12,9 @@ class MockLoginUserMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
+    # NOTE: Obviously this is a simple set up for the assignments purpose,
+    # However, if this was a production application, using this structure would lead to session hijacking by changing your
+    # username in the COOKIES
     def __call__(self, request):
         if request.path.startswith("/api"):
             username = request.COOKIES.get("username", "testuser")
